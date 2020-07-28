@@ -117,6 +117,8 @@ public class EditPollController extends PollTrackerController {
 		clearEverything();
 		Poll[] polls = getPollList().getPolls();
 		String[] pollNames = new String[polls.length];
+		
+		totalSeats.setText("" + getPollList().getNumOfSeats());
 		for (int i = 0; i < polls.length; i++) {
 			pollNames[i] = polls[i].getPollName();
 		}
