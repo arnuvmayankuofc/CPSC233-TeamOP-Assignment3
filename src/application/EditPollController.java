@@ -78,7 +78,7 @@ public class EditPollController extends PollTrackerController {
     	partyToUpdate = null;
     	for (int i = 0; i < pollToUpdate.getNumberOfParties(); i++) {
     		Party party = parties[i];
-    		partyNamesToDisplay[i] = party.getName() + " (" + party.getProjectedPercentageOfVotes() * 100 + "% of votes, " + party.getProjectedNumberOfSeats() + "seats)";
+    		partyNamesToDisplay[i] = party.getName() + " (" + party.getProjectedPercentageOfVotes() * 100 + "% of votes, " + party.getProjectedNumberOfSeats() + " seats)";
     	}
     	partyToUpdateChoice.setItems(FXCollections.observableArrayList(partyNamesToDisplay));
     }
