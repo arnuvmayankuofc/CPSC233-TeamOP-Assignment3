@@ -64,6 +64,7 @@ public class EditPollController extends PollTrackerController {
     	pollChoices.getSelectionModel().clearSelection();
     	projectedNumSeats.clear();
     	projVotePercentage.clear();
+    	resultMessageBox.setText("");
     }
     
     void clearEverything() {
