@@ -42,6 +42,9 @@ public class EditPollController extends PollTrackerController {
     private Label totalSeats;
 
     @FXML
+    private Label resultMessageBox;
+    
+    @FXML
     private Button clearButton;
 
     @FXML
@@ -95,11 +98,16 @@ public class EditPollController extends PollTrackerController {
 
     @FXML
     void updatePartyInfo(ActionEvent event) {
-    	int projectedNumSeatsInt = Integer.parseInt(projectedNumSeats.getText());
-    	float projectedVote = Float.parseFloat(projVotePercentage.getText()) / 100f;
-    	
-    	partyToUpdate.setProjectedNumberOfSeats(projectedNumSeatsInt);
-    	partyToUpdate.setProjectedPercentageOfVotes(projectedVote);
+	    try {
+    		int projectedNumSeatsInt = Integer.parseInt(projectedNumSeats.getText());
+	    	float projectedVote = Float.parseFloat(projVotePercentage.getText()) / 100f;
+	    	
+	    	partyToUpdate.setProjectedNumberOfSeats(projectedNumSeatsInt);
+	    	partyToUpdate.setProjectedPercentageOfVotes(projectedVote);
+	    	resultMessageBox.setText("Updated successfully!");
+	    } catch (Exception e) {
+	    	resultMessageBox.setText("Incorrectly inputted. Please try again.");
+	    }
     }    	
     
 	@Override
