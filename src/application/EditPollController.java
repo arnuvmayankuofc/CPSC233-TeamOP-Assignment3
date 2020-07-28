@@ -64,6 +64,7 @@ public class EditPollController extends PollTrackerController {
     }
     
     void clearEverything() {
+    	clearCurrentInfo();
     	partyToUpdateChoice.getItems().removeAll(partyToUpdateChoice.getItems());
     	pollChoices.getItems().removeAll(pollChoices.getItems());
     }
@@ -94,7 +95,11 @@ public class EditPollController extends PollTrackerController {
 
     @FXML
     void updatePartyInfo(ActionEvent event) {
-
+    	int projectedNumSeatsInt = Integer.parseInt(projectedNumSeats.getText());
+    	float projectedVote = Float.parseFloat(projVotePercentage.getText()) / 100f;
+    	
+    	partyToUpdate.setProjectedNumberOfSeats(projectedNumSeatsInt);
+    	partyToUpdate.setProjectedPercentageOfVotes(projectedVote);
     }    	
     
 	@Override
