@@ -109,7 +109,7 @@ public class PollTrackerApp extends Application {
 		 * solution.
 		 */
 		TabPane root = new TabPane(
-				createTab("Setup Poll Tracker", FXML_FILES_LOCATION + "SetupPollTrackerView.fxml"),
+				//createTab("Setup Poll Tracker", FXML_FILES_LOCATION + "SetupPollTrackerView.fxml"),
 				//createTab("Setup Parties", FXML_FILES_LOCATION + "SetupPartiesView.fxml"),
 				//createTab("Add Poll", FXML_FILES_LOCATION + "AddPollView.fxml"),
 				createTab("Edit Poll", FXML_FILES_LOCATION + "EditPollView.fxml"),
