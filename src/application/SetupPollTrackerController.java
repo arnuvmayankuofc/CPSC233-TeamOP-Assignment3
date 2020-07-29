@@ -1,3 +1,13 @@
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
+
 package application;
 
 
@@ -35,50 +45,39 @@ public class SetupPollTrackerController extends PollTrackerController {
     private TextField numberOfSeatsField;
 
     @FXML
-    void clearOptions(ActionEvent event) {
+    private void clearOptions(ActionEvent event) {
+    	clearAllOptions();
+    }
+
+    private void clearAllOptions() {
     	numberOfSeatsField.clear();
     	numberOfPartiesField.clear();
     	numberOfPollsField.clear();
     }
-
+    
+    
     @FXML
     private void updatePolls(ActionEvent event) {
-    	PollTrackerApp app = new PollTrackerApp();
-    	super.setPollTrackerApp(app);
-    	PollList list = new PollList(Integer.parseInt(numberOfPollsField.getText()), Integer.parseInt(numberOfSeatsField.getText()));
-    	Factory factory  = new Factory(Integer.parseInt(numberOfSeatsField.getText()));
-    	super.setPollList(list);
-    	super.setFactory(factory);
     	
-    	String[] str;
-    	for (int i = 0; i < Integer.parseInt(numberOfPartiesField.getText());) {
-    		
-    		str[i] = Integer.
-    		i++;
+    	int numberOfPolls = Integer.parseInt(numberOfPollsField.getText());
+    	int numberOfSeats = Integer.parseInt(numberOfSeatsField.getText());
+    	int numberOfParties  = Integer.parseInt(numberOfPartiesField.getText());
+    	
+    	Factory factory  = new Factory(numberOfSeats);
+    	
+    	String[] str = new String[numberOfParties];
+    	for (int i = 0; i < numberOfParties; i++) {
+    		str[i] = "" + (int)(i + 1);
     	}
-    		factory.setPartyNames(str);
+    	
+    	factory.setPartyNames(str);
+    	setFactory(factory);
+    	setPollList(factory.createRandomPollList(numberOfPolls));
     }
 
 	@Override
 	public void refresh() {
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		clearAllOptions();
 	}
 
 }
