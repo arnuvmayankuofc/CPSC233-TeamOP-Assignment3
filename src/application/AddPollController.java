@@ -93,11 +93,13 @@ public class AddPollController extends PollTrackerController {
 	 */
 	@FXML
 	void AddPoll(ActionEvent event) {
-		// get polls and create a random poll with the user input name provided.
 		Poll[] poll = getPollList().getPolls();
+		
+		/*
+		*1)create a random poll with the user input name provided.
+		*2)get index of the drop down options and set as index of random Poll
+		*/
 		Poll RandomPoll = getFactory().createRandomPoll(UserInput.getText());
-
-		// get index of the drop down options and set as index of random Poll
 		int index = PollPlacementChoice.getSelectionModel().getSelectedIndex();
 		poll[index] = RandomPoll;
 
