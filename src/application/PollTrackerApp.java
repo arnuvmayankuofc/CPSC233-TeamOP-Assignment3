@@ -59,28 +59,30 @@ public class PollTrackerApp extends Application {
 
 	// Remove this method if you use your own visualization.	
 	private void updateVisualization(TextArea vizualizationTextArea) {
-		ByteArrayOutputStream visualization = new ByteArrayOutputStream();
-		PrintStream visualizationStream = new PrintStream(visualization);
-		PrintStream old = System.out;
-		System.setOut(visualizationStream);
-		(new TextApplication(polls)).displayPollsBySeat(factory.getPartyNames());
-		System.out.flush();
-		System.setOut(old);
-		visualizationStream.close();
-		
-		StringBuilder partyNames = new StringBuilder();
-		partyNames.append("Party names: ");
-		for (String name : factory.getPartyNames()) {
-			partyNames.append(name);
-			partyNames.append(", ");
+		if (getPolls() != null) {	
+			ByteArrayOutputStream visualization = new ByteArrayOutputStream();
+			PrintStream visualizationStream = new PrintStream(visualization);
+			PrintStream old = System.out;
+			System.setOut(visualizationStream);
+			(new TextApplication(polls)).displayPollsBySeat(factory.getPartyNames());
+			System.out.flush();
+			System.setOut(old);
+			visualizationStream.close();
+			
+			StringBuilder partyNames = new StringBuilder();
+			partyNames.append("Party names: ");
+			for (String name : factory.getPartyNames()) {
+				partyNames.append(name);
+				partyNames.append(", ");
+			}
+			partyNames.append("\n");
+			
+			String numOfSeats = "Number of seats: " + polls.getNumOfSeats() + "\n";
+			
+			String numOfPolls = "Number of polls: " + polls.getPolls().length + "\n";
+			
+			vizualizationTextArea.setText(partyNames + numOfSeats + numOfPolls + visualization.toString());
 		}
-		partyNames.append("\n");
-		
-		String numOfSeats = "Number of seats: " + polls.getNumOfSeats() + "\n";
-		
-		String numOfPolls = "Number of polls: " + polls.getPolls().length + "\n";
-		
-		vizualizationTextArea.setText(partyNames + numOfSeats + numOfPolls + visualization.toString());		
 	}
 	
 	// Remove this method if you use your own visualization.	
@@ -100,7 +102,7 @@ public class PollTrackerApp extends Application {
 		 * Use the first if you need the application to run with some randomly generated.
 		 * use the second if you want a list of empty polls to start with.
 		 */
-		polls = factory.createRandomPollList(DEFAULT_NUMBER_OF_POLLS);
+		//polls = factory.createRandomPollList(DEFAULT_NUMBER_OF_POLLS);
 		//polls = new PollList(DEFAULT_NUMBER_OF_POLLS, DEFAULT_NUMBER_OF_SEATS);
 		/* Uncomment the line for the view you are working on.  All should be uncommented for
 		 * the final version of iteration 2 for your team.  If your team has less than 5 team

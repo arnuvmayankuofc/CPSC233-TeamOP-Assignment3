@@ -13,5 +13,6 @@
       <Label fx:id="PollPlacement" layoutX="84.0" layoutY="159.0" prefHeight="17.0" prefWidth="160.0" text="Select Poll Placement:" />
       <Label fx:id="PollNameText" layoutX="84.0" layoutY="112.0" text="Name of Poll to add:" />
       <TextField fx:id="UserInput" layoutX="193.0" layoutY="107.0" />
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="69.0" layoutY="190.0" prefHeight="39.0" prefWidth="323.0" text="You must create a poll list before you can add a poll. Go to the Setup Poll Tracker tab" textAlignment="CENTER" wrapText="true" />
    </children>
 </Pane>

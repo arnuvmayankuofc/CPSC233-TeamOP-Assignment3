@@ -21,10 +21,11 @@ import model.Poll;
 
 public class EditPollController extends PollTrackerController {
 
-	//these two private variables are what allow the class to edit the database created by factory
+	// these two private variables are what allow the class to edit the database
+	// created by factory
 	private Poll pollToUpdate;
 	private Party partyToUpdate;
-	//this is to ensure that the listener is only created once
+	// this is to ensure that the listener is only created once
 	private boolean listenerCreated = false;
 
 	@FXML
@@ -69,14 +70,42 @@ public class EditPollController extends PollTrackerController {
 	@FXML
 	private TextField projVotePercentage;
 
+	@FXML
+	private Label errorMessage;
+
 	/**
-	 * clearCurrentInfo - clears all the user inputed data so they can and input again
+	 * shouldDisplayElements - hides all the elements but the error message that the
+	 * user hasn't created a poll list if that is the case, otherwise it shows
+	 * everything but said error message
 	 */
-	void clearCurrentInfo() {
+	private void shouldDisplayElements(boolean hide) {
+		updatePartyButton.setVisible(hide);
+		pollEditText.setVisible(hide);
+		projectedNumSeatsText.setVisible(hide);
+		partyToUpdateText.setVisible(hide);
+		partyToUpdateChoice.setVisible(hide);
+		percent.setVisible(hide);
+		projectedNumSeats.setVisible(hide);
+		totalSeats.setVisible(hide);
+		resultMessageBox.setVisible(hide);
+		clearButton.setVisible(hide);
+		pollChoices.setVisible(hide);
+		projVotePercentageText.setVisible(hide);
+		slash.setVisible(hide);
+		projVotePercentage.setVisible(hide);
+
+		errorMessage.setVisible(!hide);
+	}
+
+	/**
+	 * clearCurrentInfo - clears all the user inputed data so they can and input
+	 * again
+	 */
+	private void clearCurrentInfo() {
 		/*
-		 * The first 4 objects cleared are those in which the user has a choice
-		 * The last one is the result message box, which notifies the user
-		 * of the result of their update attempt.
+		 * The first 4 objects cleared are those in which the user has a choice The last
+		 * one is the result message box, which notifies the user of the result of their
+		 * update attempt.
 		 */
 		partyToUpdateChoice.getSelectionModel().clearSelection();
 		pollChoices.getSelectionModel().clearSelection();
@@ -88,13 +117,13 @@ public class EditPollController extends PollTrackerController {
 	/**
 	 * clearEverything - clears all pertinent objects on the Scene of their contents
 	 */
-	void clearEverything() {
+	private void clearEverything() {
 		/*
-		 * this method clears all of the current info with the above method,
-		 * then also clears all of the poll options and party options.
-		 * The reason for this is that the poll and party options are generated
-		 * in refresh, so they'll get duplicated without clearing them first if
-		 * you were to switch to another view then switch back to this view.
+		 * this method clears all of the current info with the above method, then also
+		 * clears all of the poll options and party options. The reason for this is that
+		 * the poll and party options are generated in refresh, so they'll get
+		 * duplicated without clearing them first if you were to switch to another view
+		 * then switch back to this view.
 		 */
 		clearCurrentInfo();
 		partyToUpdateChoice.getItems().removeAll(partyToUpdateChoice.getItems());
@@ -102,18 +131,21 @@ public class EditPollController extends PollTrackerController {
 	}
 
 	/**
-	 * initializePartyOptions - once the user has decided a poll to edit, the party options are generated
+	 * initializePartyOptions - once the user has decided a poll to edit, the party
+	 * options are generated
 	 */
-	void initializePartyOptions() {
+	private void initializePartyOptions() {
 		Party[] parties = pollToUpdate.getPartiesSortedBySeats();
-		//this array contains the toString value of the party names (i.e. with %vote and #seats)
+		// this array contains the toString value of the party names (i.e. with %vote
+		// and #seats)
 		String partyNamesToDisplay[] = new String[pollToUpdate.getNumberOfParties()];
 
 		partyToUpdateChoice.getSelectionModel().clearSelection();
 		partyToUpdateChoice.getItems().removeAll(partyToUpdateChoice.getItems());
-		//the party to update must be reset so that the party options can be reset and the user can pick
+		// the party to update must be reset so that the party options can be reset and
+		// the user can pick
 		partyToUpdate = null;
-		//collects the party names in toString form, then adds them to the dropdown
+		// collects the party names in toString form, then adds them to the dropdown
 		for (int i = 0; i < pollToUpdate.getNumberOfParties(); i++) {
 			Party party = parties[i];
 			partyNamesToDisplay[i] = party.toString();
@@ -122,16 +154,18 @@ public class EditPollController extends PollTrackerController {
 	}
 
 	/**
-	 * initialize - does nothing due to the design of this project; initialize
-	 * is called before the polls are created, so it is unusable.
+	 * initialize - does nothing due to the design of this project; initialize is
+	 * called before the polls are created, so it is unusable.
 	 */
 	@FXML
 	void initialize() {
 
 	}
-	
+
 	/**
-	 * clearInfo - this is the clear button, and only clears the current info upon click
+	 * clearInfo - this is the clear button, and only clears the current info upon
+	 * click
+	 * 
 	 * @param event - the click
 	 */
 	@FXML
@@ -142,23 +176,23 @@ public class EditPollController extends PollTrackerController {
 	/**
 	 * updatePartyInfo - this is the update button, and updates the poll/party info
 	 * based on the user's specifications upon click
+	 * 
 	 * @param event - the click
 	 */
 	@FXML
 	void updatePartyInfo(ActionEvent event) {
 		/*
-		 * There are many things that can go wrong with the user input:
-		 * 1) they don't select a poll
-		 * 2) they don't select a party
-		 * 3) they input an invalid number of seats/no number at all
-		 * 4) they input an invalid percentage/no number at all
+		 * There are many things that can go wrong with the user input: 1) they don't
+		 * select a poll 2) they don't select a party 3) they input an invalid number of
+		 * seats/no number at all 4) they input an invalid percentage/no number at all
 		 * All of these are handled in the try-except block
 		 */
 		try {
 			int projectedNumSeatsInt = Integer.parseInt(projectedNumSeats.getText());
 			float projectedVote = Float.parseFloat(projVotePercentage.getText()) / 100f;
-			
-			//partyToUpdate references the same party in the polls database, so these changes are permanent
+
+			// partyToUpdate references the same party in the polls database, so these
+			// changes are permanent
 			partyToUpdate.setProjectedNumberOfSeats(projectedNumSeatsInt);
 			partyToUpdate.setProjectedPercentageOfVotes(projectedVote);
 			resultMessageBox.setText("Updated successfully!");
@@ -168,58 +202,64 @@ public class EditPollController extends PollTrackerController {
 	}
 
 	/**
-	 * refresh - a definition of the abstract method in PollTrackerController
-	 * This is called any time the view is changed so that the information can be updated,
-	 * but this will serve as the "runner" of the class since initialize is unusable
+	 * refresh - a definition of the abstract method in PollTrackerController This
+	 * is called any time the view is changed so that the information can be
+	 * updated, but this will serve as the "runner" of the class since initialize is
+	 * unusable
 	 */
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
-		clearEverything();
-		Poll[] polls = getPollList().getPolls();
-		String[] pollNames = new String[polls.length];
+		// if there's no poll list, they can't edit a poll
+		if (getPollList() != null) {
+			// TODO Auto-generated method stub
+			shouldDisplayElements(true);
+			clearEverything();
+			Poll[] polls = getPollList().getPolls();
+			String[] pollNames = new String[polls.length];
 
-		totalSeats.setText("" + getPollList().getNumOfSeats());
-		//collects the poll names, then adds them to the dropdown
-		for (int i = 0; i < polls.length; i++) {
-			pollNames[i] = polls[i].getPollName();
-		}
+			totalSeats.setText("" + getPollList().getNumOfSeats());
+			// collects the poll names, then adds them to the dropdown
+			for (int i = 0; i < polls.length; i++) {
+				pollNames[i] = polls[i].getPollName();
+			}
 
-		pollChoices.setItems(FXCollections.observableArrayList(pollNames));
-		
-		//ensures listener is only created once rather than on every refresh
-		if (!listenerCreated) {
-			/*
-			 * This is a change event listener on the poll choices dropdown menu -- once a user chooses
-			 * a poll,then the poll's parties become known, so initializePartyOptions() can be called
-			 * and the user can proceed to choose a party in the said poll.
-			 */
-			listenerCreated = true;
-			pollChoices.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-				@Override
-				public void changed(ObservableValue observable, Number oldValue, Number newValue) {
-					//a value of -1 indicates that the scene is on a different view than this one, hence this if
-					if (newValue.intValue() >= 0) {
-						//can't use polls because the event listener is triggered before polls is updated.
-						pollToUpdate = getPollList().getPolls()[newValue.intValue()];
-						initializePartyOptions();
+			pollChoices.setItems(FXCollections.observableArrayList(pollNames));
+
+			// ensures listener is only created once rather than on every refresh
+			if (!listenerCreated) {
+
+				listenerCreated = true;
+				/*
+				 * Each dropdown menu has a change listener -- the poll choices' listener is so
+				 * that the party dropdown knows which parties to grab, and the party choices'
+				 * listener is so that the specific party to update is grabbed.
+				 */
+				pollChoices.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+					@Override
+					public void changed(ObservableValue observable, Number oldValue, Number newValue) {
+						// a value of -1 indicates that the scene is on a different view than this one,
+						// hence this if
+						if (newValue.intValue() >= 0) {
+							// can't use polls because the event listener is triggered before polls is
+							// updated.
+							pollToUpdate = getPollList().getPolls()[newValue.intValue()];
+							initializePartyOptions();
+						}
 					}
-				}
-			});
-			/*
-			 * This is also a change event listener but on the party choices dropdown menu; however, the
-			 * need for this event listener is much more subtle than for polls -- once a user selects a
-			 * party, all this does is update partyToUpdate to the said party by locating it by index
-			 */
-			partyToUpdateChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-				@Override
-				public void changed(ObservableValue observable, Number oldValue, Number newValue) {
-					//a value of -1 indicates that the scene is on a different view than this one, hence this if
-					if (newValue.intValue() >= 0) {
-						partyToUpdate = pollToUpdate.getPartiesSortedBySeats()[newValue.intValue()];
+				});
+				partyToUpdateChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+					@Override
+					public void changed(ObservableValue observable, Number oldValue, Number newValue) {
+						// a value of -1 indicates that the scene is on a different view than this one,
+						// hence this if
+						if (newValue.intValue() >= 0) {
+							partyToUpdate = pollToUpdate.getPartiesSortedBySeats()[newValue.intValue()];
+						}
 					}
-				}
-			});
+				});
+			}
+		} else {
+			shouldDisplayElements(false);
 		}
 	}
 
