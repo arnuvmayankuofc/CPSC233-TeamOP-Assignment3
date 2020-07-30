@@ -24,6 +24,8 @@ public class EditPollController extends PollTrackerController {
 	//these two private variables are what allow the class to edit the database created by factory
 	private Poll pollToUpdate;
 	private Party partyToUpdate;
+	//this is to ensure that the listener is only created once
+	private boolean listenerCreated = false;
 
 	@FXML
 	private Button updatePartyButton;
@@ -184,35 +186,41 @@ public class EditPollController extends PollTrackerController {
 		}
 
 		pollChoices.setItems(FXCollections.observableArrayList(pollNames));
-		/*
-		 * This is a change event listener on the poll choices dropdown menu -- once a user chooses
-		 * a poll,then the poll's parties become known, so initializePartyOptions() can be called
-		 * and the user can proceed to choose a party in the said poll
-		 */
-		pollChoices.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue observable, Number oldValue, Number newValue) {
-				//a value of -1 indicates that the scene is on a different view than this one, hence this if
-				if (newValue.intValue() >= 0) {
-					pollToUpdate = polls[newValue.intValue()];
-					initializePartyOptions();
+		
+		//ensures listener is only created once rather than on every refresh
+		if (!listenerCreated) {
+			/*
+			 * This is a change event listener on the poll choices dropdown menu -- once a user chooses
+			 * a poll,then the poll's parties become known, so initializePartyOptions() can be called
+			 * and the user can proceed to choose a party in the said poll.
+			 */
+			listenerCreated = true;
+			pollChoices.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+				@Override
+				public void changed(ObservableValue observable, Number oldValue, Number newValue) {
+					//a value of -1 indicates that the scene is on a different view than this one, hence this if
+					System.out.println(newValue.intValue());
+					if (newValue.intValue() >= 0) {
+						pollToUpdate = getPollList().getPolls()[newValue.intValue()];
+						initializePartyOptions();
+					}
 				}
-			}
-		});
-		/*
-		 * This is also a change event listener but on the party choices dropdown menu; however, the
-		 * need for this event listener is much more subtle than for polls -- once a user selects a
-		 * party, all this does is update partyToUpdate to the said party by locating it by index
-		 */
-		partyToUpdateChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue observable, Number oldValue, Number newValue) {
-				//a value of -1 indicates that the scene is on a different view than this one, hence this if
-				if (newValue.intValue() >= 0) {
-					partyToUpdate = pollToUpdate.getPartiesSortedBySeats()[newValue.intValue()];
+			});
+			/*
+			 * This is also a change event listener but on the party choices dropdown menu; however, the
+			 * need for this event listener is much more subtle than for polls -- once a user selects a
+			 * party, all this does is update partyToUpdate to the said party by locating it by index
+			 */
+			partyToUpdateChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+				@Override
+				public void changed(ObservableValue observable, Number oldValue, Number newValue) {
+					//a value of -1 indicates that the scene is on a different view than this one, hence this if
+					if (newValue.intValue() >= 0) {
+						partyToUpdate = pollToUpdate.getPartiesSortedBySeats()[newValue.intValue()];
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 }
