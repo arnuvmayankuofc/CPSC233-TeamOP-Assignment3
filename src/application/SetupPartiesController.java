@@ -26,10 +26,6 @@ public class SetupPartiesController extends PollTrackerController {
 
 	private String[] partyNames; //The final list of Parties imported and exported to factory and other tabs.
 	private String[] currentParties; //The local list of Parties used by the tab
-public class SetupPartiesController extends PollTrackerController {
-
-	private String[] partyNames;
-	private String[] currentParties;
 
 	@FXML
 	private Button clearButton;
