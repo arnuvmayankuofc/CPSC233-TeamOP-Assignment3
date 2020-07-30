@@ -1,11 +1,3 @@
-/** 
- * AddPollController - the controller for the Add Poll View. 
- * The user can provide a name and the placement for each of the polls that 
- * the application will track.  
- * 
- * @author Michaela Kasongo, 30041372
- * @version 3.0, July 27, 2020.
- */
 
 package application;
 
@@ -17,6 +9,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Poll;
 import model.PollList;
+
+/** 
+ * AddPollController - the controller for the Add Poll View. 
+ * The user can provide a name and the placement for each of the polls that 
+ * the application will track.  
+ * 
+ * @author Michaela Kasongo, 30041372
+ * @version 3.0, July 27, 2020.
+ */
 
 public class AddPollController extends PollTrackerController {
 	@FXML
