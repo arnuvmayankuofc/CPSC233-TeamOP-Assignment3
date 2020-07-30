@@ -14,6 +14,7 @@ import model.PollList;
  *
  * @version 1.0
  */
+
 public abstract class PollTrackerController {
 	private PollTrackerApp app;
 	

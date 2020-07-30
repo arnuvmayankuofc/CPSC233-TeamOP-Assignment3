@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.FlowPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SetupPartiesController">
+   <children>
+      <Label fx:id="selectPartyLabel" layoutX="57.0" layoutY="74.0" prefHeight="17.0" prefWidth="164.0" text="Select party to set up: " />
+      <Label fx:id="partyNameLabel" layoutX="106.0" layoutY="139.0" text="Party name: " />
+      <ChoiceBox fx:id="selectPartyChoiceBox" layoutX="211.0" layoutY="70.0" prefWidth="150.0" />
+      <TextField fx:id="partyNameInput" layoutX="212.0" layoutY="135.0" />
+      <Button fx:id="clearButton" layoutX="57.0" layoutY="297.0" mnemonicParsing="false" onAction="#clearClick" text="Clear" />
+      <Button fx:id="setPartyInfoButton" layoutX="168.0" layoutY="297.0" mnemonicParsing="false" onAction="#setPartyInfoClick" text="Set Party Info" />
+      <Button fx:id="submitAllPartyInfoButton" layoutX="300.0" layoutY="297.0" mnemonicParsing="false" onAction="#submitAllPartyInfoClick" text="Submit All Party Info" />
+      <Label fx:id="errorMessage" layoutX="32.0" layoutY="200.0" prefHeight="58.0" prefWidth="357.0" text="You can't set up a party without creating a poll. Go to the Setup Poll Tracker tab." textAlignment="CENTER" wrapText="true" />
+   </children>
+</Pane>

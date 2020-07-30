@@ -36,6 +36,11 @@ public class Party {
 	public String getName() {
 		return name;
 	}
+
+//This setter method of name sets the name to that inputed.
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 // This getter method will return a float type of 0.0 when the argument of number of seats is less than 0.
 	public float getProjectedNumberOfSeats() {

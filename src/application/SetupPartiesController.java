@@ -26,6 +26,10 @@ public class SetupPartiesController extends PollTrackerController {
 
 	private String[] partyNames; //The final list of Parties imported and exported to factory and other tabs.
 	private String[] currentParties; //The local list of Parties used by the tab
+public class SetupPartiesController extends PollTrackerController {
+
+	private String[] partyNames;
+	private String[] currentParties;
 
 	@FXML
 	private Button clearButton;
@@ -64,7 +68,7 @@ public class SetupPartiesController extends PollTrackerController {
 	 * hasn't created a poll list", otherwise shows all other elements of this tab.
 	 * @param hide True if the current Poll List is empty, False if this check passes. 
 	 */
-	private void shouldDisplayElements(boolean hide) { 
+	private void shouldDisplayElements(boolean hide) {
 		clearButton.setVisible(hide);
 		submitAllPartyInfoButton.setVisible(hide);
 		selectPartyLabel.setVisible(hide);
