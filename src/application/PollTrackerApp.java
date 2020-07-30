@@ -1,3 +1,9 @@
+/**
+ * PollTrackerApp - this contains the program-wide copies of a poll list and
+ * a factory. It puts together all of the views into a single scene.
+ * @author Nathaly Verwaal, Arnuv Mayank
+ *
+ */
 package application;
 	
 import java.io.ByteArrayOutputStream;
@@ -27,22 +33,44 @@ public class PollTrackerApp extends Application {
 	private PollList polls;
 	private Factory factory = new Factory(DEFAULT_NUMBER_OF_SEATS);
 	
+	/**
+	 * getPolls - getter for polls
+	 * @return - polls
+	 */
 	public PollList getPolls() {
 		return polls;
 	}
 	
+	/**
+	 * setPolls - setter for polls
+	 * @param aList - the poll list it will set polls to
+	 */
 	public void setPolls(PollList aList) {
 		polls = aList;
 	}
 	
+	/**
+	 * getFactory - getter for the factory
+	 * @return - factory
+	 */
 	public Factory getFactory() {
 		return factory;
 	}
 	
+	/**
+	 * setFactory - setter for the factory
+	 * @param aFactory - the factory it will set factory to
+	 */
 	public void setFactory(Factory aFactory) {
 		factory = aFactory;
 	}
 	
+	/**
+	 * createTab - creates a tab for the scene based on the FXML specifications
+	 * @param tabName
+	 * @param FXMLFilename
+	 * @return - the tab to be included
+	 */
 	private Tab createTab(String tabName, String FXMLFilename) {
 		Tab aTab = null;
 		try {
@@ -56,9 +84,12 @@ public class PollTrackerApp extends Application {
 		}
 		return aTab;
 	}
-
-	// Remove this method if you use your own visualization.	
+	/**
+	 * updateVisualization - 
+	 * @param vizualizationTextArea
+	 */
 	private void updateVisualization(TextArea vizualizationTextArea) {
+		//can only update the visualization if polls isn't empty, and the user must initialize it
 		if (getPolls() != null) {	
 			ByteArrayOutputStream visualization = new ByteArrayOutputStream();
 			PrintStream visualizationStream = new PrintStream(visualization);
@@ -69,6 +100,8 @@ public class PollTrackerApp extends Application {
 			System.setOut(old);
 			visualizationStream.close();
 			
+			//getPartyNames returns a String[], but this must be converted to a String Builder
+			//for the visualization
 			StringBuilder partyNames = new StringBuilder();
 			partyNames.append("Party names: ");
 			for (String name : factory.getPartyNames()) {
@@ -85,7 +118,10 @@ public class PollTrackerApp extends Application {
 		}
 	}
 	
-	// Remove this method if you use your own visualization.	
+	/**
+	 * getDefaultVisualization - uses visualization provided to construct the tab
+	 * @return - the visualization tab
+	 */
 	private Tab getDefaultVisualization() {
 		// Create a stream to hold the output
 		TextArea vizTextArea = new TextArea();
@@ -95,21 +131,11 @@ public class PollTrackerApp extends Application {
 		return vizTab; 
 	}
 	
+	/**
+	 * start - creates the scene
+	 */
 	@Override
 	public void start(Stage primaryStage) {
-		/* Remove the next two lines (and this comment) before the final version of iteration 2.
-		 * These two first statements allows you to run and test your view with some data.
-		 * Use the first if you need the application to run with some randomly generated.
-		 * use the second if you want a list of empty polls to start with.
-		 */
-		//polls = factory.createRandomPollList(DEFAULT_NUMBER_OF_POLLS);
-		//polls = new PollList(DEFAULT_NUMBER_OF_POLLS, DEFAULT_NUMBER_OF_SEATS);
-		/* Uncomment the line for the view you are working on.  All should be uncommented for
-		 * the final version of iteration 2 for your team.  If your team has less than 5 team
-		 * members, you can leave the fifth 'createTab' uncommented.  Otherwise, delete the last
-		 * argument that provides a default visualization before finalizing your team's 
-		 * solution.
-		 */
 		TabPane root = new TabPane(
 				createTab("Setup Poll Tracker", FXML_FILES_LOCATION + "SetupPollTrackerView.fxml"),
 				createTab("Setup Parties", FXML_FILES_LOCATION + "SetupPartiesView.fxml"),
