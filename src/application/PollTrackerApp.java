@@ -18,7 +18,16 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 
-
+/**
+ * PollTrackerApp Program is a GUI that allows a user to manipulate and visualize polls.
+ * 
+ * @author Jamie MacDonald
+ * @author Michaela Kasongo
+ * @author Arnuv Mayank
+ * @author Desmond O'Brien
+ *
+ * @version 1.0
+ */
 public class PollTrackerApp extends Application {
 	public static final int DEFAULT_NUMBER_OF_SEATS = 345;
 	public static final String FXML_FILES_LOCATION = "src/view/";
@@ -27,22 +36,44 @@ public class PollTrackerApp extends Application {
 	private PollList polls;
 	private Factory factory = new Factory(DEFAULT_NUMBER_OF_SEATS);
 	
+	/**
+	 * Retrieves the List of Polls currently being tracked
+	 * @return A list of polls.
+	 */
 	public PollList getPolls() {
 		return polls;
 	}
 	
+	/**
+	 * Updates the stored instance variable with all polls currently tracked.
+	 * @param aList The list of polls which will be stored.
+	 */
 	public void setPolls(PollList aList) {
 		polls = aList;
 	}
 	
+	/**
+	 * Gets the Factory.
+	 * @return The current Factory. 
+	 */
 	public Factory getFactory() {
 		return factory;
 	}
 	
+	/**
+	 * Sets the Factory.
+	 * @param aFactory
+	 */
 	public void setFactory(Factory aFactory) {
 		factory = aFactory;
 	}
 	
+	/**
+	 * Creates a new tab in JavaFX.
+	 * @param tabName
+	 * @param FXMLFilename
+	 * @return a tab
+	 */
 	private Tab createTab(String tabName, String FXMLFilename) {
 		Tab aTab = null;
 		try {
@@ -57,7 +88,10 @@ public class PollTrackerApp extends Application {
 		return aTab;
 	}
 
-	// Remove this method if you use your own visualization.	
+	/**
+	 * Gets the current party data stored in factory and calls on text application to make a visual layout.
+	 * @param vizualizationTextArea
+	 */
 	private void updateVisualization(TextArea vizualizationTextArea) {
 		ByteArrayOutputStream visualization = new ByteArrayOutputStream();
 		PrintStream visualizationStream = new PrintStream(visualization);
@@ -83,7 +117,11 @@ public class PollTrackerApp extends Application {
 		vizualizationTextArea.setText(partyNames + numOfSeats + numOfPolls + visualization.toString());		
 	}
 	
-	// Remove this method if you use your own visualization.	
+	/**
+	 * 	Gets the latest data and stores it in a tab.
+	 * 
+	 * @return vizTab A tab with the organized information of all the parties.
+	 */
 	private Tab getDefaultVisualization() {
 		// Create a stream to hold the output
 		TextArea vizTextArea = new TextArea();
@@ -93,6 +131,11 @@ public class PollTrackerApp extends Application {
 		return vizTab; 
 	}
 	
+	/**
+	 * Starts the Poll Tracker Program. 
+	 * A new window opens with multiple tabs to control and display poll data.
+	 * Calls from child classes to control the Polls.
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		/* Remove the next two lines (and this comment) before the final version of iteration 2.
@@ -123,6 +166,10 @@ public class PollTrackerApp extends Application {
 		primaryStage.show();
 	}
 	
+	/**
+	 * The main method for the Poll Tracker Program.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

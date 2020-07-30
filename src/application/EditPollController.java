@@ -12,6 +12,13 @@ import javafx.scene.control.TextField;
 import model.Party;
 import model.Poll;
 
+/**
+ * EditPollController - the controller for the Edit Poll View. Lets the user
+ * choose a poll to edit, then a party in that poll, and allows them to input
+ * a projected number of seats and percentage vote won, then updates that party.
+ * 
+ * @author Arnuv Mayank, 30069504
+ */
 public class EditPollController extends PollTrackerController {
 	
 	private Poll  pollToUpdate;
