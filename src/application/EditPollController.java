@@ -201,6 +201,7 @@ public class EditPollController extends PollTrackerController {
 					//a value of -1 indicates that the scene is on a different view than this one, hence this if
 					System.out.println(newValue.intValue());
 					if (newValue.intValue() >= 0) {
+						//can't use polls because the event listener is triggered before polls is updated.
 						pollToUpdate = getPollList().getPolls()[newValue.intValue()];
 						initializePartyOptions();
 					}
