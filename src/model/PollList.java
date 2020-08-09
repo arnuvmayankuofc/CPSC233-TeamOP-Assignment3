@@ -66,25 +66,20 @@ public class PollList {
 	 * @since 1.0
 	 */
 	public void addPoll(Poll aPoll) throws PollListFullException {
-		if (aPoll == null) {
+		if (aPoll == null)
 			System.out.print("Error. Please provide the poll name.");
-		}
-
 		else {
 			int i = 0;
 			Boolean exist = false;
-			for (; i < polls.length && polls[i] != null; i++) {
-				if ((polls[i].getPollName()).equalsIgnoreCase(aPoll.getPollName())) {
+			for (; i < polls.length; i++) {
+				if ((polls[i].getPollName()).equalsIgnoreCase(aPoll.getPollName()) || (polls[i] == null && !exist)) {
 					polls[i] = aPoll;
 					exist = true;
 				}
 			}
-			if (i < polls.length) {
-				polls[i] = aPoll;
-				exist = true;
-			} else {
-				throw new PollListFullException();
-			}
+			if (!exist)
+				throw new PollListFullException("The PollList is Full. Cannot add" + aPoll.getPollName() + ".");
+
 		}
 	}
 

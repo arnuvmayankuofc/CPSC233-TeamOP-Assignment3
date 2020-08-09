@@ -6,16 +6,19 @@ import java.util.Random;
 /**
  * Class Factory, creates random party names and seats
  * 
- * @author Victor Campos, 30106934
+ * @author Victor Campos
+ * @author Jamie MacDonald
  *
  */
 public class Factory {
-
-	// Instance variables
-
 	private int numOfSeats;
 	String[] partyNames = { "BQ", "CPC", "Green", "Liberal", "NDP", "PPC", "Rhinoceros" };
 
+	/**
+	 * Constructs a new {@code Factory} with specified number of Election Seats.
+	 * 
+	 * @param numOfSeats the number of election seats.
+	 */
 	public Factory(int numOfSeats) {
 		this.numOfSeats = numOfSeats;
 
@@ -26,30 +29,40 @@ public class Factory {
 		}
 	}
 
+	/**
+	 * Takes a list of party names and stores in the Factory.
+	 * 
+	 * @param names the array of names to be saved.
+	 */
 	public void setPartyNames(String[] names) {
 		partyNames = names;
 	}
 
+	/**
+	 * Fetches the list of party names stored in the Factory.
+	 * 
+	 * @return array of party names.
+	 */
 	public String[] getPartyNames() {
 		return partyNames;
 	}
 
 	/**
-	 * createRandomParty, creates a random party, confined to a maximum number and
-	 * percentage vote
+	 * Creates a new party object with a random number of seats and random
+	 * percentage of votes, confined to specified maximums.
 	 * 
-	 * @param partyName
-	 * @param maximumSeats
-	 * @param maximumPercent
-	 * @return creates a new party object using these properties
+	 * @param partyName      a party's name.
+	 * @param maximumSeats   the maximum number of seats.
+	 * @param maximumPercent the maximum percent of votes.
+	 * @return The {@code Party} with random properties.
 	 */
 	public Party createRandomParty(String partyName, int maximumSeats, int maximumPercent) {
 		Random rand = new Random();
 		int numSeatsInParty = rand.nextInt(maximumSeats + 1);
-		if (maximumSeats != 0) {	
-			float percentageVotesOfParty = (float) (rand.nextInt((int)(maximumPercent * 100) + 1) / 100.0);
-			while (Math.abs(((float)(numSeatsInParty) / numOfSeats) - percentageVotesOfParty) > 0.05) {
-				percentageVotesOfParty = (float) (rand.nextInt((int)(maximumPercent * 100) + 1) / 100.0);
+		if (maximumSeats != 0) {
+			float percentageVotesOfParty = (float) (rand.nextInt((int) (maximumPercent * 100) + 1) / 100.0);
+			while (Math.abs(((float) (numSeatsInParty) / numOfSeats) - percentageVotesOfParty) > 0.05) {
+				percentageVotesOfParty = (float) (rand.nextInt((int) (maximumPercent * 100) + 1) / 100.0);
 			}
 			return new Party(partyName, numSeatsInParty, percentageVotesOfParty);
 		}
@@ -57,10 +70,10 @@ public class Factory {
 	}
 
 	/**
-	 * createRandomPoll makes a poll based of a series of random parties
+	 * Generates a Poll filled with elements with {@code createRandomParty}
 	 * 
-	 * @param name
-	 * @return
+	 * @param name The desired poll name.
+	 * @return The Poll with random Party elements
 	 */
 	public Poll createRandomPoll(String name) {
 		Poll poll = new Poll(name, partyNames.length);
@@ -78,10 +91,10 @@ public class Factory {
 	}
 
 	/**
-	 * createRandomPollList makes a polllist based of the series of polls
+	 * Generates a PollList filled with elements with {@code createRandomPoll}.
 	 * 
-	 * @param numOfPolls
-	 * @return
+	 * @param numOfPolls The number of polls in the PollList.
+	 * @return The PollList filled with random Poll elements.
 	 */
 	public PollList createRandomPollList(int numOfPolls) {
 		PollList polls = new PollList(numOfPolls, numOfSeats);
@@ -91,10 +104,12 @@ public class Factory {
 			polls.addPoll(newPoll);
 		}
 		return polls;
+
 	}
+
+	
 	public PollList promptForPollList(int numOfPolls) {
 		return createRandomPollList(numOfPolls);
 	}
-
 
 }

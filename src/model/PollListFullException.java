@@ -21,7 +21,7 @@ public class PollListFullException extends Exception {
 	}
 
 	/**
-	 * (Copied from exception) A new exception with specified message. The cause is
+	 * A new exception with specified message. The cause is
 	 * not initialized, and may subsequently be initialized by a call to
 	 * {@link #initCause}.
 	 *
