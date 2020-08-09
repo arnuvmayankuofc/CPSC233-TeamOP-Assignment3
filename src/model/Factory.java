@@ -101,13 +101,16 @@ public class Factory {
 
 		for (int i = 0; i < numOfPolls; i++) {
 			Poll newPoll = createRandomPoll("Poll " + (i + 1));
-			polls.addPoll(newPoll);
+			try {
+				polls.addPoll(newPoll);
+			} catch (PollListFullException plfe) {
+				plfe.printStackTrace(); // "i" will not exceed numOfPolls so don't need to handle.
+			}
 		}
 		return polls;
 
 	}
 
-	
 	public PollList promptForPollList(int numOfPolls) {
 		return createRandomPollList(numOfPolls);
 	}
