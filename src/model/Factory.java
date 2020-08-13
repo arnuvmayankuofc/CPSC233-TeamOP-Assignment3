@@ -71,9 +71,11 @@ public class Factory {
 		} else {
 			numSeatsInParty = 0;
 		}
+		// catching InvalidPartyDataException when making new party
 		try {
 			return new Party(partyName, numSeatsInParty, percentageVotesOfParty);
 		} catch (InvalidPartyDataException ipde) {
+			// if it happens, print the stack trace
 			ipde.printStackTrace();
 			return null;
 		}
