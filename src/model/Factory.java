@@ -8,6 +8,8 @@ import java.util.Random;
  * 
  * @author Victor Campos
  * @author Jamie MacDonald
+ * @author Arnuv Mayank
+ * @author Michaela Kasongo
  *
  */
 public class Factory {
@@ -55,18 +57,28 @@ public class Factory {
 	 * @param maximumSeats   the maximum number of seats.
 	 * @param maximumPercent the maximum percent of votes.
 	 * @return The {@code Party} with random properties.
+	 * @throws InvalidPartyDataException 
 	 */
-	public Party createRandomParty(String partyName, int maximumSeats, int maximumPercent) {
+	public Party createRandomParty(String partyName, int maximumSeats, int maximumPercent){
 		Random rand = new Random();
 		int numSeatsInParty = rand.nextInt(maximumSeats + 1);
+		float percentageVotesOfParty = 0f;
 		if (maximumSeats != 0) {
-			float percentageVotesOfParty = (float) (rand.nextInt((int) (maximumPercent * 100) + 1) / 100.0);
+			percentageVotesOfParty = (float) (rand.nextInt((int) (maximumPercent * 100) + 1) / 100.0);
 			while (Math.abs(((float) (numSeatsInParty) / numOfSeats) - percentageVotesOfParty) > 0.05) {
 				percentageVotesOfParty = (float) (rand.nextInt((int) (maximumPercent * 100) + 1) / 100.0);
 			}
-			return new Party(partyName, numSeatsInParty, percentageVotesOfParty);
+		} else {
+			numSeatsInParty = 0;
 		}
-		return new Party(partyName, 0, 0);
+		// catching InvalidPartyDataException when making new party
+		try {
+			return new Party(partyName, numSeatsInParty, percentageVotesOfParty);
+		} catch (InvalidPartyDataException ipde) {
+			// if it happens, print the stack trace
+			ipde.printStackTrace();
+			return null;
+		}
 	}
 
 	/**

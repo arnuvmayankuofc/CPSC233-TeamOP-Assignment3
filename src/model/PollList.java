@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * 
  * 
  * @author Jamie MacDonald
+ * @author Arnuv Mayank
  * @since 1.0
  * 
  */
@@ -71,8 +72,12 @@ public class PollList {
 		else {
 			int i = 0;
 			Boolean exist = false;
-			for (; i < polls.length; i++) {
-				if ((polls[i].getPollName()).equalsIgnoreCase(aPoll.getPollName()) || (polls[i] == null && !exist)) {
+			for (; i < polls.length && !exist; i++) {
+				if (polls[i] == null) {
+					polls[i] = aPoll;
+					exist = true;
+				}
+				else if ((polls[i].getPollName()).equalsIgnoreCase(aPoll.getPollName())) {
 					polls[i] = aPoll;
 					exist = true;
 				}
@@ -98,7 +103,18 @@ public class PollList {
 			Party avedParty = getAveragePartyData(p);
 			Aggregate.addParty(avedParty);
 		}
-		adjustPollToMaximums(Aggregate);
+		
+		/*
+		 * if there is an error adjusting polls to their maxima, then we chose for
+		 * this method to catch the exception instead of throwing it because PollList is the
+		 * most "outer" of the classes (PollList > Poll > Party), so it is the last in this chain
+		 * and has nowhere else to go for this error to be handled
+		 */
+		try {
+			adjustPollToMaximums(Aggregate);
+		} catch (InvalidPartyDataException ipde) {
+			ipde.printStackTrace();
+		}
 		return Aggregate;
 	}
 
@@ -125,8 +141,18 @@ public class PollList {
 			}
 		}
 		if (pollCount > 0) {
-			aParty.setProjectedNumberOfSeats(seatCount / pollCount);
-			aParty.setProjectedPercentageOfVotes(percCount / pollCount);
+			/*
+			 * if there is an error generating the average projected votes/seats, then we chose for
+			 * this method to catch the exception instead of throwing it because PollList is the
+			 * most "outer" of the classes (PollList > Poll > Party), so it is the last in this chain
+			 * and has nowhere else to go for this error to be handled
+			 */
+			try {	
+				aParty.setProjectedNumberOfSeats(seatCount / pollCount);
+				aParty.setProjectedPercentageOfVotes(percCount / pollCount);
+			} catch (InvalidPartyDataException ipde) {
+				ipde.printStackTrace();
+			}
 		}
 		return aParty;
 	}
@@ -138,9 +164,10 @@ public class PollList {
 	 * 
 	 * @param aPoll the {@code Poll} to be corrected.
 	 * @return {@code Poll} with corrected seats and vote percentage.
+	 * @throws InvalidPartyDataException 
 	 * @since 1.0
 	 */
-	public Poll adjustPollToMaximums(Poll aPoll) {
+	private Poll adjustPollToMaximums(Poll aPoll) throws InvalidPartyDataException {
 		Party[] aParties = aPoll.getPartiesSortedBySeats();
 		float seatCheck = 0;
 		float percCheck = 0;
@@ -148,6 +175,8 @@ public class PollList {
 			seatCheck += a.getProjectedNumberOfSeats();
 			percCheck += a.getProjectedPercentageOfVotes();
 		}
+		// since this is simply a helper method, it will throw the error so that the calling method
+		// getAggregatePolls can handle it
 		if (seatCheck > this.numOfSeats) {
 			for (Party p : aParties) {
 				float fractionOfSeats = p.getProjectedNumberOfSeats() / seatCheck;

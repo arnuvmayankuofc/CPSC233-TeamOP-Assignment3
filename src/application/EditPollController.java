@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
+import model.InvalidPartyDataException;
 import model.Party;
 import model.Poll;
 
@@ -71,7 +73,7 @@ public class EditPollController extends PollTrackerController {
 	private TextField projVotePercentage;
 
 	@FXML
-	private Label errorMessage;
+	private Label pollListNotMadeMessage;
 
 	/**
 	 * shouldDisplayElements - hides all the elements but the error message that the
@@ -94,7 +96,7 @@ public class EditPollController extends PollTrackerController {
 		slash.setVisible(hide);
 		projVotePercentage.setVisible(hide);
 
-		errorMessage.setVisible(!hide);
+		pollListNotMadeMessage.setVisible(!hide);
 	}
 
 	/**
@@ -181,11 +183,13 @@ public class EditPollController extends PollTrackerController {
 	 */
 	@FXML
 	void updatePartyInfo(ActionEvent event) {
+		String invalidVotesError = "Percentage of votes must be between 0 and 1 (inclusive). ";
+		String invalidSeatsError = "Number of seats must be non-negative. ";
 		/*
 		 * There are many things that can go wrong with the user input: 1) they don't
 		 * select a poll 2) they don't select a party 3) they input an invalid number of
 		 * seats/no number at all 4) they input an invalid percentage/no number at all
-		 * All of these are handled in the try-except block
+		 * All of these are handled in the try-catch block
 		 */
 		try {
 			int projectedNumSeatsInt = Integer.parseInt(projectedNumSeats.getText());
@@ -196,9 +200,27 @@ public class EditPollController extends PollTrackerController {
 			partyToUpdate.setProjectedNumberOfSeats(projectedNumSeatsInt);
 			partyToUpdate.setProjectedPercentageOfVotes(projectedVote);
 			resultMessageBox.setText("Updated successfully!");
-		} catch (Exception e) {
-			resultMessageBox.setText("Incorrectly inputted. Please try again.");
-		}
+			// successful message is green, error is red
+			resultMessageBox.setTextFill(Paint.valueOf("green"));
+		} catch (NullPointerException npe) {
+			// case when they don't select a poll/party
+			resultMessageBox.setText("You did not select a party/poll to edit. Please try again: ");
+			resultMessageBox.setTextFill(Paint.valueOf("red"));
+		} catch (NumberFormatException nfe) {
+			// case where the votes/seats they enter is not a number
+			resultMessageBox.setText("One of the fields inputted is not a number. Please try again");
+			resultMessageBox.setTextFill(Paint.valueOf("red"));
+		} catch (InvalidPartyDataException ipde) {
+			// case where the votes/seats they enter is a number but is not valid based on specifications in assignment
+			if (ipde.getMessage().equals(invalidVotesError)) {
+				resultMessageBox.setText(invalidVotesError + "Please try again. ");
+			} else if (ipde.getMessage().equals(invalidSeatsError)) {
+				resultMessageBox.setText(invalidSeatsError + "Please try again. ");
+			} else {
+				resultMessageBox.setText("Invalid. Please try again. ");
+			}
+			resultMessageBox.setTextFill(Paint.valueOf("red"));
+		} 
 	}
 
 	/**

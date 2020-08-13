@@ -21,6 +21,6 @@
       <Button fx:id="clearButton" layoutX="159.0" layoutY="299.0" mnemonicParsing="false" onAction="#clearInfo" text="Clear" />
       <Button fx:id="updatePartyButton" layoutX="292.0" layoutY="299.0" mnemonicParsing="false" onAction="#updatePartyInfo" text="Update Party" />
       <Label fx:id="resultMessageBox" alignment="CENTER" layoutX="50.0" layoutY="337.0" prefHeight="17.0" prefWidth="403.0" />
-      <Label fx:id="errorMessage" layoutX="79.0" layoutY="130.0" prefHeight="54.0" prefWidth="332.0" text="You must create a poll list before you can edit a poll. Go to the Setup Poll Tracker tab." textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="pollListNotMadeMessage" layoutX="79.0" layoutY="130.0" prefHeight="54.0" prefWidth="332.0" text="You must create a poll list before you can edit a poll. Go to the Setup Poll Tracker tab." textAlignment="CENTER" textFill="#e80b0b" wrapText="true" />
    </children>
 </Pane>

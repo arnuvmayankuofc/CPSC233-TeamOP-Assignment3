@@ -1,27 +1,49 @@
 package model;
-// CPSC 233 Assignment 1
-// 30068971
-// Minsu Kim
-// This class will take a party name, number of seats, and percentage of votes as a main argument and then visualize the results through text.
 
+/**
+ * This class will take a party name, number of seats, and percentage of votes as a main argument and then visualize the results through text.
+ * It will also catch any errors when the number of seats and percentage of votes are invalid
+ * 
+ * @author Minsu Kim
+ * @author Arnuv Mayank
+ *
+ */
 public class Party {
 	private String name;
 	private float projectedNumberOfSeats;
 	private float projectedPercentageOfVotes;
 	
-// This method changes partyName to name for simplicity.	
+	/**
+	 * Constructor - sets the party's name to the one provided
+	 * 
+	 * @param partyName - the name of the party
+	 */
 	public Party(String partyName) {
 		name = partyName;
 	}
 
-// This is the main method used for party, which takes a string type party name, float type number of seats and percentage of votes.
-	public Party(String partyName, float projectedNumberOfSeats, float projectedPercentageOfVotes) {
+	/**
+	 * Constructor - same for party name as above, but now also sets projected number of seats and votes to the ones provided
+	 * 
+	 * @param partyName - the name of the party
+	 * @param projectedNumberOfSeats - the projected number of seats (must be >= 0)
+	 * @param projectedPercentageOfVotes - the projected number of votes (must be between 0 and 1)
+	 * 
+	 * @throws InvalidPartyDataException 
+	 */
+	public Party(String partyName, float projectedNumberOfSeats, float projectedPercentageOfVotes) throws InvalidPartyDataException {
 		name = partyName;
+		
 		setProjectedNumberOfSeats(projectedNumberOfSeats);
 		setProjectedPercentageOfVotes(projectedPercentageOfVotes);
+
 	}
 
-// This getter method of the percentage will return a float type 0.0 only when the number inputed is outside of its parameter of between 0 and 1.
+	/**
+	 * This getter method of the percentage will return a float type 0.0 only when the number inputed is outside of its parameter of between 0 and 1.
+	 * 
+	 * @return the projected percentage of votes
+	 */
 	public float getProjectedPercentageOfVotes() {
 		if (projectedPercentageOfVotes < 0) {
 			return (float) 0.0;
@@ -32,17 +54,30 @@ public class Party {
 		return projectedPercentageOfVotes;
 	}
 	
-// This getter method of name will return the party name.	
+	/**
+	 * Gets the party's name
+	 * 
+	 * @return the party's name
+	 */
 	public String getName() {
 		return name;
 	}
 
-//This setter method of name sets the name to that inputed.
+	/**
+	 * Sets the party's name
+	 * 
+	 * @param name - the name to be set to
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-// This getter method will return a float type of 0.0 when the argument of number of seats is less than 0.
+
+	/**
+	 * Gets the projected number of seats
+	 * 
+	 * @return the projected number of seats
+	 */
 	public float getProjectedNumberOfSeats() {
 		if (projectedNumberOfSeats > 0) {
 			return projectedNumberOfSeats;
@@ -50,26 +85,47 @@ public class Party {
 		return (float) 0.0;
 	}
 	
-//	This setter method will only work if the argument passed is within the parameter and once it does, it will change up the original parameter passed on by the main method.
-	public void setProjectedPercentageOfVotes(float projectedPercentageOfVotes) {
+	/**
+	 * Sets the projected percentage of votes
+	 * 
+	 * @param projectedPercentageOfVotes - the percentage of votes to be set to
+	 */
+	public void setProjectedPercentageOfVotes(float projectedPercentageOfVotes) throws InvalidPartyDataException {
 		if (projectedPercentageOfVotes >= 0 && projectedPercentageOfVotes <= 1) {
 			this.projectedPercentageOfVotes = projectedPercentageOfVotes;
+		} else {
+			throw new InvalidPartyDataException("Percentage of votes must be between 0 and 1 (inclusive). ");
 		}
 	}
 	
-// This setter method will only work if the argument passed is within the parameter and once it does, it will change up the original parameter passed on by the main method.
-	public void setProjectedNumberOfSeats(float projectedNumberOfSeats) {
+	/**
+	 * Sets the projected number of seats
+	 * 
+	 * @param projectedNumberOfSeats the number of seats to be set to
+	 */
+	public void setProjectedNumberOfSeats(float projectedNumberOfSeats) throws InvalidPartyDataException {
 		if (projectedNumberOfSeats >= 0) {
-		this.projectedNumberOfSeats = projectedNumberOfSeats;
+			this.projectedNumberOfSeats = projectedNumberOfSeats;
+		} else {
+			throw new InvalidPartyDataException("Number of seats must be non-negative. ");
 		}
 	}
 
-// This toString method will take the main method's arguments, and print out the proper statement.
+	/**
+	 * Prints a parties information in the specified manner
+	 */
 	public String toString() {
 		int votes = (int) (projectedPercentageOfVotes * 100);
 		return name + " (" + votes + "% of votes, " + projectedNumberOfSeats + " seats)";
 	}
 
+	/**
+	 * Gives the projected percentage of seats given the total
+	 * 
+	 * @param totalNumberOfSeats - the total number of seats
+	 * 
+	 * @return the ratio of projected seats to total seats
+	 */
 	public double projectedPercentOfSeats(int totalNumberOfSeats) {
 		if (totalNumberOfSeats > 0) {
 			double num = projectedNumberOfSeats / totalNumberOfSeats;
@@ -80,57 +136,73 @@ public class Party {
 		}
 	}
 	
-// This textVisualSeats method will take the three arguments, and return a text visual of the inputs.	
+	/**	
+	 * Gives a visual representation of the party by seats in the specified manner.
+	 * 
+	 * @param maxStars - the maximum number of stars that should be displayed on a single line
+	 * @param starsNeededForMajority - the minimum number of starts that would represent a majority
+	 * @param numOfSeatsPerStar - how many seats are represented by a star
+	 * 
+	 * @return the text visualization
+	 */
 	public String textVisualizationBySeats(int maxStars, int starsNeededForMajority, double numOfSeatsPerStar) {
 		String list = "";
-		// For counting how many stars should be printed out.
+		// for counting how many stars should be printed out.
 		int stars = (int) (projectedNumberOfSeats / numOfSeatsPerStar);
 		for (int counter = 0; counter < maxStars +1; counter++) {
-			// At the majority point, which is half of the max stars, it will put in "|" to show a visual of where the half way point is.
+			// at the majority point, which is half of the max stars, it will put in "|" to show a visual of where the half way point is
 			if (counter == starsNeededForMajority) {
 				list += "|";
 			}
 			else {
-				// Using int stars, it will loop through to add "*", for the amount of stars that should be printed out.
+				// using int stars, it will loop through to add "*", for the amount of stars that should be printed out
 				if(stars > 0) {
 					list += "*";
 					stars --;
 				}
 				else {
-				// This else statement will only go through once all of the "*" are used up and the rest of the spaces needed will be filled with spaces in order to show a proper visual.
+					// only goes through once all of the "*" are used up and the rest of the spaces needed will be filled with spaces in order to show a proper visual
 					list += " ";
 					stars --;
 				}
 			}
 		}
-		// This returns the proper statement of the visual.
+		// returns the proper statement of the visual.
 		return list + " " + name + " (" + ((int)(projectedPercentageOfVotes * 100)) + "% of votes, " + projectedNumberOfSeats + " seats)";
 	}
 	
-// This method will take three inputs, and show a visual of what is needed to be shown. The only difference between the above textVisual method is that this is shown using votes, not seats.
+	/**	
+	 * Gives a visual representation of the party by votes in the specified manner.
+	 * 
+	 * @param maxStars - the maximum number of stars that should be displayed on a single line
+	 * @param starsNeededForMajority - the minimum number of starts that would represent a majority
+	 * @param numOfSeatsPerStar - how many seats are represented by a star
+	 * 
+	 * @return the text visualization
+	 */
 	public String textVisualizationByVotes(int maxStars, int starsNeededForMajority, double percentOfVotesPerStar) {
 		String list = "";
-		// Int stars is created by using formulas to count how many stars(votes) should be shown.
+		// int stars is created by using formulas to count how many stars(votes) should be shown
 		int stars = (int) ((projectedPercentageOfVotes * 100) / percentOfVotesPerStar);
 		for (int counter = 0; counter < maxStars + 1; counter++) {
-			// At the majority point, which is half of the max stars, it will put in "|" to show a visual of where the half way point is.
+			// At the majority point, which is half of the max stars, it will put in "|" to show a visual of where the half way point is
 			if (counter == starsNeededForMajority) {
 				list += "|";
 			}
 			else {
-				// Using int stars, it will loop through to add "*", for the amount of stars that should be printed out.
+				// using int stars, it will loop through to add "*", for the amount of stars that should be printed out
 				if(stars > 0) {
 					list += "*";
 					stars --;
 				}
 				else {
-				// This else statement will only go through once all of the "*" are used up and the rest of the spaces needed will be filled with spaces in order to show a proper visual.
+					// only goes through once all of the "*" are used up and the rest of the spaces needed will be filled with spaces in order to show a proper visual.
 					list += " ";
 					stars --;
 				}
 			}
 		}
-		// This returns the proper statement of the visual.
+		// returns the proper statement of the visual.
 		return list + " " + name + " (" + ((int)(projectedPercentageOfVotes * 100)) + "% of votes, " + projectedNumberOfSeats + " seats)";
 	}
 }
