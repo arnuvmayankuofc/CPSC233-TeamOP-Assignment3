@@ -28,11 +28,15 @@ public class Party {
 	 * @param partyName - the name of the party
 	 * @param projectedNumberOfSeats - the projected number of seats (must be >= 0)
 	 * @param projectedPercentageOfVotes - the projected number of votes (must be between 0 and 1)
+	 * 
+	 * @throws InvalidPartyDataException 
 	 */
-	public Party(String partyName, float projectedNumberOfSeats, float projectedPercentageOfVotes) {
+	public Party(String partyName, float projectedNumberOfSeats, float projectedPercentageOfVotes) throws InvalidPartyDataException {
 		name = partyName;
+		
 		setProjectedNumberOfSeats(projectedNumberOfSeats);
 		setProjectedPercentageOfVotes(projectedPercentageOfVotes);
+
 	}
 
 	/**
@@ -86,9 +90,11 @@ public class Party {
 	 * 
 	 * @param projectedPercentageOfVotes - the percentage of votes to be set to
 	 */
-	public void setProjectedPercentageOfVotes(float projectedPercentageOfVotes) {
+	public void setProjectedPercentageOfVotes(float projectedPercentageOfVotes) throws InvalidPartyDataException {
 		if (projectedPercentageOfVotes >= 0 && projectedPercentageOfVotes <= 1) {
 			this.projectedPercentageOfVotes = projectedPercentageOfVotes;
+		} else {
+			throw new InvalidPartyDataException("Percentage of votes must be between 0 and 1 (inclusive). ");
 		}
 	}
 	
@@ -97,9 +103,11 @@ public class Party {
 	 * 
 	 * @param projectedNumberOfSeats the number of seats to be set to
 	 */
-	public void setProjectedNumberOfSeats(float projectedNumberOfSeats) {
+	public void setProjectedNumberOfSeats(float projectedNumberOfSeats) throws InvalidPartyDataException {
 		if (projectedNumberOfSeats >= 0) {
 			this.projectedNumberOfSeats = projectedNumberOfSeats;
+		} else {
+			throw new InvalidPartyDataException("Number of seats must be non-negative. ");
 		}
 	}
 
@@ -139,27 +147,27 @@ public class Party {
 	 */
 	public String textVisualizationBySeats(int maxStars, int starsNeededForMajority, double numOfSeatsPerStar) {
 		String list = "";
-		// For counting how many stars should be printed out.
+		// for counting how many stars should be printed out.
 		int stars = (int) (projectedNumberOfSeats / numOfSeatsPerStar);
 		for (int counter = 0; counter < maxStars +1; counter++) {
-			// At the majority point, which is half of the max stars, it will put in "|" to show a visual of where the half way point is
+			// at the majority point, which is half of the max stars, it will put in "|" to show a visual of where the half way point is
 			if (counter == starsNeededForMajority) {
 				list += "|";
 			}
 			else {
-				// Using int stars, it will loop through to add "*", for the amount of stars that should be printed out
+				// using int stars, it will loop through to add "*", for the amount of stars that should be printed out
 				if(stars > 0) {
 					list += "*";
 					stars --;
 				}
 				else {
-					// Only goes through once all of the "*" are used up and the rest of the spaces needed will be filled with spaces in order to show a proper visual
+					// only goes through once all of the "*" are used up and the rest of the spaces needed will be filled with spaces in order to show a proper visual
 					list += " ";
 					stars --;
 				}
 			}
 		}
-		// Returns the proper statement of the visual.
+		// returns the proper statement of the visual.
 		return list + " " + name + " (" + ((int)(projectedPercentageOfVotes * 100)) + "% of votes, " + projectedNumberOfSeats + " seats)";
 	}
 	
@@ -174,27 +182,27 @@ public class Party {
 	 */
 	public String textVisualizationByVotes(int maxStars, int starsNeededForMajority, double percentOfVotesPerStar) {
 		String list = "";
-		// Int stars is created by using formulas to count how many stars(votes) should be shown.
+		// int stars is created by using formulas to count how many stars(votes) should be shown
 		int stars = (int) ((projectedPercentageOfVotes * 100) / percentOfVotesPerStar);
 		for (int counter = 0; counter < maxStars + 1; counter++) {
-			// At the majority point, which is half of the max stars, it will put in "|" to show a visual of where the half way point is.
+			// At the majority point, which is half of the max stars, it will put in "|" to show a visual of where the half way point is
 			if (counter == starsNeededForMajority) {
 				list += "|";
 			}
 			else {
-				// Using int stars, it will loop through to add "*", for the amount of stars that should be printed out.
+				// using int stars, it will loop through to add "*", for the amount of stars that should be printed out
 				if(stars > 0) {
 					list += "*";
 					stars --;
 				}
 				else {
-				// This else statement will only go through once all of the "*" are used up and the rest of the spaces needed will be filled with spaces in order to show a proper visual.
+					// only goes through once all of the "*" are used up and the rest of the spaces needed will be filled with spaces in order to show a proper visual.
 					list += " ";
 					stars --;
 				}
 			}
 		}
-		// This returns the proper statement of the visual.
+		// returns the proper statement of the visual.
 		return list + " " + name + " (" + ((int)(projectedPercentageOfVotes * 100)) + "% of votes, " + projectedNumberOfSeats + " seats)";
 	}
 }
