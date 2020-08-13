@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * 
  * 
  * @author Jamie MacDonald
+ * @author Michaela Kasongo
  * @author Arnuv Mayank
  * @since 1.0
  * 
@@ -101,7 +102,18 @@ public class PollList {
 		Poll Aggregate = new Poll("Aggregate", partyNames.length);
 		for (String p : partyNames) {
 			Party avedParty = getAveragePartyData(p);
-			Aggregate.addParty(avedParty);
+			
+			/*
+			 * if there is an error generating the aggregate polls with party names 
+			 * then we chose for this method to catch the exception instead of throwing it because PollList is the
+			 * most "outer" of the classes (PollList > Poll > Party), so it is the last in this chain
+			 * and has nowhere else to go for this error to be handled.
+			 */	
+			try {
+				Aggregate.addParty(avedParty);
+			} catch (PollFullException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		/*
