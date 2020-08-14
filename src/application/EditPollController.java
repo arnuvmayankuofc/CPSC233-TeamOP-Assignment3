@@ -16,8 +16,8 @@ import model.Poll;
 
 /**
  * EditPollController - the controller for the Edit Poll View. Lets the user
- * choose a poll to edit, then a party in that poll, and allows them to input
- * a projected number of seats and percentage vote won, then updates that party.
+ * choose a poll to edit, then a party in that poll, and allows them to input a
+ * projected number of seats and percentage vote won, then updates that party.
  * 
  * @author Arnuv Mayank, 30069504
  */
@@ -156,6 +156,16 @@ public class EditPollController extends PollTrackerController {
 	}
 
 	/**
+	 * Makes the result box text red and displays a specified error message
+	 * 
+	 * @param message - the error message
+	 */
+	private void displayErrorMessage(String message) {
+		resultMessageBox.setTextFill(Paint.valueOf("red"));
+		resultMessageBox.setText(message + "Please try again. ");
+	}
+	
+	/**
 	 * initialize - does nothing due to the design of this project; initialize is
 	 * called before the polls are created, so it is unusable.
 	 */
@@ -195,8 +205,6 @@ public class EditPollController extends PollTrackerController {
 			int projectedNumSeatsInt = Integer.parseInt(projectedNumSeats.getText());
 			float projectedVote = Float.parseFloat(projVotePercentage.getText()) / 100f;
 
-			// partyToUpdate references the same party in the polls database, so these
-			// changes are permanent
 			partyToUpdate.setProjectedNumberOfSeats(projectedNumSeatsInt);
 			partyToUpdate.setProjectedPercentageOfVotes(projectedVote);
 			resultMessageBox.setText("Updated successfully!");
@@ -204,23 +212,21 @@ public class EditPollController extends PollTrackerController {
 			resultMessageBox.setTextFill(Paint.valueOf("green"));
 		} catch (NullPointerException npe) {
 			// case when they don't select a poll/party
-			resultMessageBox.setText("You did not select a party/poll to edit. Please try again: ");
-			resultMessageBox.setTextFill(Paint.valueOf("red"));
+			displayErrorMessage("You did not select a party/poll to edit. ");
 		} catch (NumberFormatException nfe) {
 			// case where the votes/seats they enter is not a number
-			resultMessageBox.setText("One of the fields inputted is not a number. Please try again");
-			resultMessageBox.setTextFill(Paint.valueOf("red"));
+			displayErrorMessage("One of the fields inputted is not a number. ");
 		} catch (InvalidPartyDataException ipde) {
-			// case where the votes/seats they enter is a number but is not valid based on specifications in assignment
+			// case where the votes/seats they enter is a number but is not valid based on
+			// specifications in assignment
 			if (ipde.getMessage().equals(invalidVotesError)) {
-				resultMessageBox.setText(invalidVotesError + "Please try again. ");
+				displayErrorMessage("Percentage of votes must be between 0% and 100%. ");
 			} else if (ipde.getMessage().equals(invalidSeatsError)) {
-				resultMessageBox.setText(invalidSeatsError + "Please try again. ");
+				displayErrorMessage(invalidSeatsError);
 			} else {
-				resultMessageBox.setText("Invalid. Please try again. ");
+				displayErrorMessage("Invalid. ");
 			}
-			resultMessageBox.setTextFill(Paint.valueOf("red"));
-		} 
+		}
 	}
 
 	/**
@@ -259,9 +265,10 @@ public class EditPollController extends PollTrackerController {
 				pollChoices.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 					@Override
 					public void changed(ObservableValue observable, Number oldValue, Number newValue) {
-						// a value of -1 indicates that the scene is on a different view than this one,
-						// hence this if
+						// a value of -1 indicates that the scene is on a different view than this one
 						if (newValue.intValue() >= 0) {
+							// after selecting a new poll, reset the result of the last edit attempt
+							resultMessageBox.setText("");
 							// can't use polls because the event listener is triggered before polls is
 							// updated.
 							pollToUpdate = getPollList().getPolls()[newValue.intValue()];
@@ -269,16 +276,17 @@ public class EditPollController extends PollTrackerController {
 						}
 					}
 				});
-				partyToUpdateChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-					@Override
-					public void changed(ObservableValue observable, Number oldValue, Number newValue) {
-						// a value of -1 indicates that the scene is on a different view than this one,
-						// hence this if
-						if (newValue.intValue() >= 0) {
-							partyToUpdate = pollToUpdate.getPartiesSortedBySeats()[newValue.intValue()];
-						}
-					}
-				});
+				partyToUpdateChoice.getSelectionModel().selectedIndexProperty()
+						.addListener(new ChangeListener<Number>() {
+							@Override
+							public void changed(ObservableValue observable, Number oldValue, Number newValue) {
+								// a value of -1 indicates that the scene is on a different view than this one,
+								// hence this if
+								if (newValue.intValue() >= 0) {
+									partyToUpdate = pollToUpdate.getPartiesSortedBySeats()[newValue.intValue()];
+								}
+							}
+						});
 			}
 		} else {
 			shouldDisplayElements(false);
