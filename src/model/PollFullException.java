@@ -6,14 +6,14 @@ import java.lang.Exception;
  * Handles invalid data related to a poll in TextApplication and PollTrackerApp.
  * {@code PollFullException} is a subclass of {@code Exception}
  * 
- * @author Michaela Kasongo, 30041372
+ * @author Michaela Kasongo
  * @since 1.0
  *
  */
 public class PollFullException extends Exception {
 
 	/**
-	 * Constructs new exception with a null message. The cause is not initialized,
+	 * Constructs new PollFullException with a null message. The cause is not initialized,
 	 * and may subsequently be initialized by a call to {@link #initCause}.
 	 */
 	public PollFullException() {
@@ -21,7 +21,7 @@ public class PollFullException extends Exception {
 	}
 
 	/**
-	 * A new exception with specified message. The cause is
+	 * A new PollFullException with specified message. The cause is
 	 * not initialized, and may subsequently be initialized by a call to
 	 * {@link #initCause}.
 	 *
@@ -33,7 +33,7 @@ public class PollFullException extends Exception {
 	}
 
 	/**
-	 * Constructs a new exception with the specified detail message and cause.
+	 * Constructs a new PollFullException with the specified detail message and cause.
 	 * <p>
 	 * Note that the detail message associated with {@code cause} is <i>not</i>
 	 * automatically incorporated in this exception's detail message.
@@ -51,7 +51,7 @@ public class PollFullException extends Exception {
 	}
 
 	/**
-	 * Constructs a new exception with the specified cause and a detail message of
+	 * Constructs a new PollFullException with the specified cause and a detail message of
 	 * {@code (cause==null ? null : cause.toString())} (which typically contains the
 	 * class and detail message of {@code cause}). This constructor is useful for
 	 * exceptions that are little more than wrappers for other throwables (for
@@ -67,7 +67,7 @@ public class PollFullException extends Exception {
 	}
 
 	/**
-	 * Constructs a new exception with the specified detail message, cause,
+	 * Constructs a new PollFullException with the specified detail message, cause,
 	 * suppression enabled or disabled, and writable stack trace enabled or
 	 * disabled.
 	 *

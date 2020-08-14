@@ -24,7 +24,7 @@ public abstract class PollTrackerController {
 	public abstract void refresh();
 	
 	/**
-	 * Sets the app Program
+	 * Sets the app to be used for the pollTracker.
 	 * @param app An updated version of the poll tracker app to be set.
 	 */
 	public void setPollTrackerApp(PollTrackerApp app) {

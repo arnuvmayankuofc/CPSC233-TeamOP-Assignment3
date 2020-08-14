@@ -3,13 +3,15 @@ package model;
 import java.util.ArrayList;
 
 /**
- * The PollList Class has two instance variables: 1) a list of polls stored in
- * an array. 2) the number of seats available for the election.
+ * A PollList stores a collection of {@code Poll} objects and the number of
+ * seats available in this election. Through this class, the polls can be
+ * accessed and the list may be modified.
  * 
  * 
  * @author Jamie MacDonald
  * @author Michaela Kasongo
  * @author Arnuv Mayank
+ * 
  * @since 1.0
  * 
  */
@@ -77,8 +79,7 @@ public class PollList {
 				if (polls[i] == null) {
 					polls[i] = aPoll;
 					exist = true;
-				}
-				else if ((polls[i].getPollName()).equalsIgnoreCase(aPoll.getPollName())) {
+				} else if ((polls[i].getPollName()).equalsIgnoreCase(aPoll.getPollName())) {
 					polls[i] = aPoll;
 					exist = true;
 				}
@@ -102,27 +103,28 @@ public class PollList {
 		Poll Aggregate = new Poll("Aggregate", partyNames.length);
 		for (String p : partyNames) {
 			Party avedParty = getAveragePartyData(p);
-			
+
 			/*
-			 * if there is an error generating the aggregate polls with party names 
-			 * then we chose for this method to catch the exception instead of throwing it because PollList is the
-			 * most "outer" of the classes (PollList > Poll > Party), so within model, there is nowhere
-			 * else for the error to be caught. This preserves generalizability if we wanted to use
-			 * something different than JavaFX
-			 */	
+			 * if there is an error generating the aggregate polls with party names then we
+			 * chose for this method to catch the exception instead of throwing it because
+			 * PollList is the most "outer" of the classes (PollList > Poll > Party), so
+			 * within model, there is nowhere else for the error to be caught. This
+			 * preserves generalizability if we wanted to use something different than
+			 * JavaFX
+			 */
 			try {
 				Aggregate.addParty(avedParty);
 			} catch (PollFullException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		/*
-		 * if there is an error adjusting polls to their maxima, then we chose for
-		 * this method to catch the exception instead of throwing it because PollList is the
-		 * most "outer" of the classes (PollList > Poll > Party), so within model, there is nowhere
-		 * else for the error to be caught. This preserves generalizability if we wanted to use
-		 * something different than JavaFX
+		 * if there is an error adjusting polls to their maxima, then we chose for this
+		 * method to catch the exception instead of throwing it because PollList is the
+		 * most "outer" of the classes (PollList > Poll > Party), so within model, there
+		 * is nowhere else for the error to be caught. This preserves generalizability
+		 * if we wanted to use something different than JavaFX
 		 */
 		try {
 			adjustPollToMaximums(Aggregate);
@@ -156,13 +158,14 @@ public class PollList {
 		}
 		if (pollCount > 0) {
 			/*
-			 * if there is an error generating the average projected votes/seats, then we chose for
-			 * this method to catch the exception instead of throwing it because PollList is the
-			 * most "outer" of the classes (PollList > Poll > Party), so within model, there is nowhere
-			 * else for the error to be caught. This preserves generalizability if we wanted to use
-			 * something different than JavaFX
+			 * if there is an error generating the average projected votes/seats, then we
+			 * chose for this method to catch the exception instead of throwing it because
+			 * PollList is the most "outer" of the classes (PollList > Poll > Party), so
+			 * within model, there is nowhere else for the error to be caught. This
+			 * preserves generalizability if we wanted to use something different than
+			 * JavaFX
 			 */
-			try {	
+			try {
 				aParty.setProjectedNumberOfSeats(seatCount / pollCount);
 				aParty.setProjectedPercentageOfVotes(percCount / pollCount);
 			} catch (InvalidPartyDataException ipde) {
@@ -180,7 +183,8 @@ public class PollList {
 	 * @param aPoll the {@code Poll} to be corrected.
 	 * @return {@code Poll} with corrected seats and vote percentage.
 	 * @throws InvalidPartyDataException when projected number of seats is negative
-	 * 		   or percentage of votes is not between 0 and 1 for any party
+	 *                                   or percentage of votes is not between 0 and
+	 *                                   1 for any party
 	 * @since 1.0
 	 */
 	private Poll adjustPollToMaximums(Poll aPoll) throws InvalidPartyDataException {
@@ -191,8 +195,10 @@ public class PollList {
 			seatCheck += a.getProjectedNumberOfSeats();
 			percCheck += a.getProjectedPercentageOfVotes();
 		}
-		// since this is simply a helper method, it will throw the error so that the calling method
-		// getAggregatePolls can handle it. Private methods guarantee that the error is handled within
+		// since this is simply a helper method, it will throw the error so that the
+		// calling method
+		// getAggregatePolls can handle it. Private methods guarantee that the error is
+		// handled within
 		// the same file, so we preserve the aforementioned generalizability
 		if (seatCheck > this.numOfSeats) {
 			for (Party p : aParties) {

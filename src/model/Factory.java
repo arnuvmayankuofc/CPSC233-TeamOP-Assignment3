@@ -4,11 +4,11 @@ import java.lang.Math;
 import java.util.Random;
 
 /**
- * Class Factory, creates random party names and seats
+ * Creates random party names and seats.
  * 
  * @author Victor Campos
- * @author Jamie MacDonald
  * @author Arnuv Mayank
+ * @author Jamie MacDonald
  * @author Michaela Kasongo
  *
  */
@@ -134,6 +134,13 @@ public class Factory {
 
 	}
 
+	/**
+	 * Fetches a PollList using {@code createRandomPollList}.
+	 * 
+	 * @param numOfPolls The number of polls in the PollList.
+	 * 
+	 * @return The PollList of appropriate size.
+	 */
 	public PollList promptForPollList(int numOfPolls) {
 		return createRandomPollList(numOfPolls);
 	}

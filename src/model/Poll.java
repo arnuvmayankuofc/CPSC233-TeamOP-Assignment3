@@ -2,10 +2,12 @@ package model;
 import java.util.Arrays;
 import java.util.Comparator;
 
-/** @author Michaela kasongo
- * @since July 15 2020
+/** 
  * This is the Poll Class. This class represents a single poll
  * 
+ * @author Michaela Kasongo
+ * 
+ * @since July 15 2020
  */
 
 public class Poll {
