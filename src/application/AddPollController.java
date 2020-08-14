@@ -48,6 +48,9 @@ public class AddPollController extends PollTrackerController {
 	@FXML
 	private Label errorMessage;
 
+	@FXML
+	private Label selectionError;
+
 
 	/**
 	 * shouldDisplay - hides all the elements but the error message that the user
@@ -92,6 +95,7 @@ public class AddPollController extends PollTrackerController {
 		PollPlacementChoice.getSelectionModel().clearSelection();
 		UserInput.clear();
 		UserInput.setText("");
+		selectionError.setText("");
 
 	}
 
@@ -108,29 +112,39 @@ public class AddPollController extends PollTrackerController {
 		 * create a random poll with the user input name provided. get index of the drop
 		 * down options and set as index of random Poll
 		 */
-		Poll[] poll = getPollList().getPolls();
-		Poll RandomPoll = getFactory().createRandomPoll(UserInput.getText());
-		int index = PollPlacementChoice.getSelectionModel().getSelectedIndex();
-		poll[index] = RandomPoll;
+		try {
+			Poll[] poll = getPollList().getPolls();
+			Poll RandomPoll = getFactory().createRandomPoll(UserInput.getText());
+			int index = PollPlacementChoice.getSelectionModel().getSelectedIndex();
+			poll[index] = RandomPoll;
 
-		// add new random poll to the poll List along with default party information
-		PollList finallist = new PollList(poll.length, getPollList().getNumOfSeats());
-		for (int i = 0; i < poll.length; i++) {
-			try {
+			// add new random poll to the poll List along with default party information
+			PollList finallist = new PollList(poll.length, getPollList().getNumOfSeats());
+			for (int i = 0; i < poll.length; i++) {
 				finallist.addPoll(poll[i]);
-			} catch (PollListFullException plfe) {
-				plfe.printStackTrace();
-				errorMessage.setTextFill(Paint.valueOf("red"));
-				errorMessage.setText("Error: the PollList is Full.");
-				refresh();
-				/*
-				 *  if this was ever called it would display and error message and reset, but the
-				 *  user is just replacing polls in the set polllist length. 
-				 */
-
 			}
+			setPollList(finallist);
+			selectionError.setTextFill(Paint.valueOf("green"));
+			selectionError.setText("Added successfully.");
+			refresh();
+			/*
+			 * if this was ever called it would display and error message and reset, but the
+			 * user is just replacing polls in the set pollList length.
+			 */
+		} catch (PollListFullException plfe) {
+			plfe.printStackTrace();
+			selectionError.setTextFill(Paint.valueOf("red"));
+			selectionError.setText("Error: the PollList is Full. Please clear and try again.");
+
+			/*
+			 * This exception is thrown when the user does not select a poll to replace.
+			 * Then index of the poll array is null and nothing is replaced. 
+			 */
+		} catch (ArrayIndexOutOfBoundsException aioobe) {
+			aioobe.printStackTrace();
+			selectionError.setTextFill(Paint.valueOf("orange"));
+			selectionError.setText("Error: No selection was made. Please clear and try again.");
 		}
-		setPollList(finallist); // set list
 	}
 
 	/**
