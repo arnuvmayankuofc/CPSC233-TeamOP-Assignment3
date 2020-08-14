@@ -95,12 +95,23 @@ public class Factory {
 		for (int i = 0; i < partyNames.length; i++) {
 			Party currentParty = createRandomParty(partyNames[i], remainingSeatsInPoll, 1);
 			seatsConsumedInParty = (int) currentParty.getProjectedNumberOfSeats();
-			poll.addParty(currentParty);
+			
+			/*
+			 * catch pollFullException if number of parties attempted to be added
+			 * is beyond the poll capacity.
+			 */
+			try {
+				poll.addParty(currentParty);
+			} catch (PollFullException ei) {
+				ei.printStackTrace();
+			}
 			remainingSeatsInPoll -= seatsConsumedInParty;
 
 		}
 		return poll;
 	}
+
+
 
 	/**
 	 * Generates a PollList filled with elements with {@code createRandomPoll}.

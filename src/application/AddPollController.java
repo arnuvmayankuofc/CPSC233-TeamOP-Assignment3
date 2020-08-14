@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import model.Poll;
+import model.PollFullException;
 import model.PollList;
 import model.PollListFullException;
 
