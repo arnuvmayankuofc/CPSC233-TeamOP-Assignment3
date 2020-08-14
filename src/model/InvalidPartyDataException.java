@@ -1,5 +1,12 @@
 package model;
 
+/**
+ * Handles when an attempt is made to set Party projected seats/votes with invalid data.
+ * {@code InvalidPartyDataException} is a subclass of {@code Exception}
+ * 
+ * @author Arnuv Mayank
+ *
+ */
 public class InvalidPartyDataException extends Exception {
 
 	/**
