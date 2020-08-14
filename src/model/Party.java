@@ -29,7 +29,8 @@ public class Party {
 	 * @param projectedNumberOfSeats - the projected number of seats (must be >= 0)
 	 * @param projectedPercentageOfVotes - the projected number of votes (must be between 0 and 1)
 	 * 
-	 * @throws InvalidPartyDataException 
+	 * @throws InvalidPartyDataException when projected number of seats is negative
+	 * 		   or percentage of votes is not between 0 and 1 for any party
 	 */
 	public Party(String partyName, float projectedNumberOfSeats, float projectedPercentageOfVotes) throws InvalidPartyDataException {
 		name = partyName;
@@ -89,6 +90,8 @@ public class Party {
 	 * Sets the projected percentage of votes
 	 * 
 	 * @param projectedPercentageOfVotes - the percentage of votes to be set to
+	 * 
+	 * @throws InvalidPartyDataException when projected percentage of votes is not between 0 and 1 for any party
 	 */
 	public void setProjectedPercentageOfVotes(float projectedPercentageOfVotes) throws InvalidPartyDataException {
 		if (projectedPercentageOfVotes >= 0 && projectedPercentageOfVotes <= 1) {
@@ -102,6 +105,8 @@ public class Party {
 	 * Sets the projected number of seats
 	 * 
 	 * @param projectedNumberOfSeats the number of seats to be set to
+	 * 
+	 * @throws InvalidPartyDataException when projected number of seats is negative
 	 */
 	public void setProjectedNumberOfSeats(float projectedNumberOfSeats) throws InvalidPartyDataException {
 		if (projectedNumberOfSeats >= 0) {

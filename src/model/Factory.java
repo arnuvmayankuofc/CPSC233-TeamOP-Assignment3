@@ -56,10 +56,10 @@ public class Factory {
 	 * @param partyName      a party's name.
 	 * @param maximumSeats   the maximum number of seats.
 	 * @param maximumPercent the maximum percent of votes.
-	 * @return The {@code Party} with random properties.
-	 * @throws InvalidPartyDataException 
+	 * 
+	 * @return The {@code Party} with random properties or a null object if InvalidPartyDataException caught
 	 */
-	public Party createRandomParty(String partyName, int maximumSeats, int maximumPercent){
+	public Party createRandomParty(String partyName, int maximumSeats, int maximumPercent) {
 		Random rand = new Random();
 		int numSeatsInParty = rand.nextInt(maximumSeats + 1);
 		float percentageVotesOfParty = 0f;
@@ -75,7 +75,7 @@ public class Factory {
 		try {
 			return new Party(partyName, numSeatsInParty, percentageVotesOfParty);
 		} catch (InvalidPartyDataException ipde) {
-			// if it happens, print the stack trace
+			// if it happens, print the stack trace and return a null party
 			ipde.printStackTrace();
 			return null;
 		}
