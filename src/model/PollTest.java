@@ -40,16 +40,66 @@ public class PollTest {
 		Party p9 = new MockParty("p9");
 		Party p10 = new MockParty("p10");
 		
-		p.addParty(p1);
-		p.addParty(p2);
-		p.addParty(p3);
-		p.addParty(p4);
-		p.addParty(p5);
-		p.addParty(p6);
-		p.addParty(p7);
-		p.addParty(p8);
-		p.addParty(p9);
-		p.addParty(p10);
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			p.addParty(p4);
+		} catch (PollFullException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			p.addParty(p5);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p6);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p7);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p8);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p9);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p10);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 				
 
 		assertEquals("Created poll with room for 0 parties, should be able to add 10 parties", 10, p.getNumberOfParties());
@@ -71,16 +121,66 @@ public class PollTest {
 		Party p9 = new MockParty("p9");
 		Party p10 = new MockParty("p10");
 		
-		p.addParty(p1);
-		p.addParty(p2);
-		p.addParty(p3);
-		p.addParty(p4);
-		p.addParty(p5);
-		p.addParty(p6);
-		p.addParty(p7);
-		p.addParty(p8);
-		p.addParty(p9);
-		p.addParty(p10);
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p4);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p5);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p6);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p7);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p8);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p9);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p10);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 				
 
 		assertEquals("Created poll with room for -1 parties, should be able to add 10 parties", 10, p.getNumberOfParties());
@@ -90,7 +190,12 @@ public class PollTest {
 	public void test_addParty_firstAdd() {
 		Poll p = new Poll("Poll Test", 4);
 		Party party = new MockParty("PartyOne");
-		p.addParty(party);
+		try {
+			p.addParty(party);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("Created poll with single party, expected number of parties to be one", 1, p.getNumberOfParties());
 		assertEquals("Created poll with single party, expected that party to be found in getParty method.", party, p.getParty("PartyOne"));
 	}
@@ -100,8 +205,18 @@ public class PollTest {
 		Poll p = new Poll("Poll Test", 7);
 		Party p1 = new MockParty("PartyOne");
 		Party p2 = new MockParty("Party Two");
-		p.addParty(p1);
-		p.addParty(p2);
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("Created poll with two unique parties, expected number of parties to be two", 2, p.getNumberOfParties());
 		assertEquals("Created poll with two parties, expected party 'PartyOne' to be found in getParty method.", p1, p.getParty("PartyOne"));
 		assertEquals("Created poll with two parties, expected party 'Party Two' to be found in getParty method.", p2, p.getParty("Party Two"));
@@ -116,12 +231,42 @@ public class PollTest {
 		Party p4 = new MockParty("Party 4");
 		Party p5 = new MockParty("Fifth Party");
 		Party p6 = new MockParty("6th Party");
-		p.addParty(p1);
-		p.addParty(p2);
-		p.addParty(p3);
-		p.addParty(p4);
-		p.addParty(p5);
-		p.addParty(p6);
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p4);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p5);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p6);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("Created poll with six parties, expected number of parties to be six", 6, p.getNumberOfParties());
 		assertEquals("Created poll with six parties, expected 'PartyOne' by getParty method.", p1, p.getParty("PartyOne"));
 		assertEquals("Created poll with six parties, expected 'Party Two' by getParty method.", p2, p.getParty("Party Two"));
@@ -142,13 +287,48 @@ public class PollTest {
 		Party p6 = new MockParty("6th Party");
 		Party p7 = new MockParty("No room for 7th");
 				
-		p.addParty(p1);
-		p.addParty(p2);
-		p.addParty(p3);
-		p.addParty(p4);
-		p.addParty(p5);
-		p.addParty(p6);
-		p.addParty(p7);;
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p4);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p5);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p6);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p7);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 		
 		assertEquals("Created poll with six parties, expected number of parties to be six", 6, p.getNumberOfParties());
 		assertEquals("Created poll with six parties, expected 'PartyOne' by getParty method.", p1, p.getParty("PartyOne"));
@@ -165,8 +345,18 @@ public class PollTest {
 		Poll p = new Poll("Poll Test", 7);
 		Party p1 = new MockParty("PartyOne");
 		Party p2 = new MockParty("PartyOne");
-		p.addParty(p1);
-		p.addParty(p2);
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("Created poll with two parties with the same name, expected number of parties to be one", 1, p.getNumberOfParties());
 		assertEquals("Created poll with two parties, expected party 'PartyOne' to be found in getParty method.", p2, p.getParty("PartyOne"));
 	}
@@ -176,8 +366,18 @@ public class PollTest {
 		Poll p = new Poll("Poll Test", 7);
 		Party p1 = new MockParty("PartyOne");
 		Party p2 = new MockParty("partyONE");
-		p.addParty(p1);
-		p.addParty(p2);
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("Created poll with two parties with the same name, expected number of parties to be one", 1, p.getNumberOfParties());
 		assertEquals("Created poll with two parties, expected party 'partyONE' (second, duplicate) to be found in getParty method.", p2, p.getParty("PartyOne"));
 	}
@@ -193,13 +393,48 @@ public class PollTest {
 		Party p6 = new MockParty("6th Party");
 		Party p7 = new MockParty("PartyOne");
 				
-		p.addParty(p1);
-		p.addParty(p2);
-		p.addParty(p3);
-		p.addParty(p4);
-		p.addParty(p5);
-		p.addParty(p6);
-		p.addParty(p7);;
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p4);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p5);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p6);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p7);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 		
 		assertEquals("Created poll with six parties, expected number of parties to be six", 6, p.getNumberOfParties());
 		assertEquals("Created poll with six parties, expected 'PartyOne' by getParty method to be duplicate.", p7, p.getParty("PartyOne"));
@@ -221,13 +456,48 @@ public class PollTest {
 		Party p6 = new MockParty("6th Party");
 		Party p7 = new MockParty("6th Party");
 				
-		p.addParty(p1);
-		p.addParty(p2);
-		p.addParty(p3);
-		p.addParty(p4);
-		p.addParty(p5);
-		p.addParty(p6);
-		p.addParty(p7);;
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p4);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p5);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p6);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p7);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 		
 		assertEquals("Created poll with six parties, expected number of parties to be six", 6, p.getNumberOfParties());
 		assertEquals("Created poll with six parties, expected 'PartyOne' by getParty method.", p1, p.getParty("PartyOne"));
@@ -248,17 +518,82 @@ public class PollTest {
 	@Test
 	public void test_getPartiesSortedBySeats() {
 		Poll p = new Poll("poll1", 5);
-		Party p1 = new Party("p1", 60,0.5f);
-		Party p2 = new Party("p2", 50,0.5f);
-		Party p3 = new Party("p3", 40,0.5f);
-		Party p4 = new Party("p4", 30,0.5f);
-		Party p5 = new Party("p5", 20,0.5f);
-		Party[] expectedList = {p1,p2,p3,p4,p5};
-		p.addParty(p5);
-		p.addParty(p1);
-		p.addParty(p3);
-		p.addParty(p4);
-		p.addParty(p2);
+		Party p1 = new Party("p1");
+		Party[] expectedList = new Party[5];
+		try {
+			p1.setProjectedNumberOfSeats(60); 
+			p1.setProjectedPercentageOfVotes(0.5f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Party p2 = new Party ("p2");
+		try {
+			p2.setProjectedNumberOfSeats(50);
+			p2.setProjectedPercentageOfVotes(0.5f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Party p3 = new Party("p3");
+		try {
+			p3.setProjectedNumberOfSeats(40);
+			p3.setProjectedPercentageOfVotes(0.5f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Party p4 = new Party("p4");
+		try {
+			p4 = new Party("p4", 30,0.5f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Party p5 = new Party("p5");
+		try {
+			p5 = new Party("p5", 20,0.5f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+		expectedList[0] = p1;
+		expectedList[1] = p2;
+		expectedList[2] = p3;
+		expectedList[3] = p4;
+		expectedList[4] = p5;
+		}
+		try {
+			p.addParty(p5);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p4);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Party[] actualList = p.getPartiesSortedBySeats();
 		
@@ -271,17 +606,72 @@ public class PollTest {
 	@Test
 	public void test_getPartiesSortedByVotes() {
 		Poll p = new Poll("poll1", 5);
-		Party p1 = new Party("p1", 30,0.6f);
-		Party p2 = new Party("p2", 30,0.5f);
-		Party p3 = new Party("p3", 30,0.4f);
-		Party p4 = new Party("p4", 30,0.3f);
-		Party p5 = new Party("p5", 30,0.2f);
+		Party p1 = new Party("p1");
+		try {
+			p1 = new Party("p1", 30,0.6f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Party p2 = new Party("p2");
+		try {
+			p2 = new Party("p2", 30,0.5f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Party p3 = new Party("p3");
+		try {
+			p3 = new Party("p3", 30,0.4f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Party p4 = new Party("p4");
+		try {
+			p4 = new Party("p4", 30,0.3f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Party p5 = new Party("p5");
+		try {
+			p5 = new Party("p5", 30,0.2f);
+		} catch (InvalidPartyDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Party[] expectedList = {p1,p2,p3,p4,p5};
-		p.addParty(p5);
-		p.addParty(p1);
-		p.addParty(p3);
-		p.addParty(p4);
-		p.addParty(p2);
+		try {
+			p.addParty(p5);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p4);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Party[] actualList = p.getPartiesSortedByVotes();
 		
@@ -300,7 +690,12 @@ public class PollTest {
 	public void test_toString_oneParty() {
 		Poll p = new Poll("Poll name", 4);
 		Party p1 = new MockParty("p1");
-		p.addParty(p1);
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("getting string representation of poll with name 'Poll name' and one party", "Poll name\np1", p.toString().trim());
 	}
 
@@ -311,9 +706,24 @@ public class PollTest {
 		Party p2 = new MockParty("p2");
 		Party p3 = new MockParty("p3");
 
-		p.addParty(p1);
-		p.addParty(p2);
-		p.addParty(p3);
+		try {
+			p.addParty(p1);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p2);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.addParty(p3);
+		} catch (PollFullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		assertEquals("getting string representation of poll with name 'Poll name' and three parties", "Poll name too\np1\np2\np3", p.toString().trim());
 	}
